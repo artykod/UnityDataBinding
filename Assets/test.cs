@@ -95,7 +95,7 @@ public class test : MonoBehaviour
 
         //TraverseDataSource(dataSource);
 
-        if (dataSource.TryGetNodeByPath<IDataProperty>("extra.6.enabled", out var property))
+        if (dataSource.TryGetNodeByPath<IDataProperty>("items[item1].count", out var property))
         {
             Debug.Log(property.GetValue<string>());
         }

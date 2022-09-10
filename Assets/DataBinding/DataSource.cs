@@ -81,11 +81,6 @@ public class DataSource : IDataSource
 
     public bool TryGetNodeByPath<T>(string nodePath, out T result) where T : IDataNode
     {
-        if (!nodePath.Contains('.'))
-        {
-            return TryGetNode(nodePath, out result);
-        }
-
         result = default;
 
         var dataSource = (IDataSource)this;
@@ -95,7 +90,9 @@ public class DataSource : IDataSource
 
         for (int i = 0, l = nodePath.Length; i < l; ++i)
         {
-            if (nodePath[i] != '.')
+            var ch = nodePath[i];
+
+            if (ch != '.' && ch != '[' && ch != ']')
             {
                 ++nameLength;
 
@@ -107,7 +104,7 @@ public class DataSource : IDataSource
 
             var nameHash = IDataSource.HashNodeName(nodePath, nameIdx, nameLength);
 
-            if (!dataSource.TryGetNode<IDataNode>(nameHash, out node))
+            if (nameLength > 0 && !dataSource.TryGetNode<IDataNode>(nameHash, out node))
             {
                 node = null;
 
