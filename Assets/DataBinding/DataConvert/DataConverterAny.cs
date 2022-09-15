@@ -1,5 +1,6 @@
 public static partial class DataConverter
-{    private class AnyStringConverter<SrcT> : ConverterEntry<SrcT, string>
+{
+    private class AnyStringConverter<SrcT> : ConverterEntry<SrcT, string>
     {
         public override string Convert(SrcT src) => src?.ToString() ?? "null";
     }
